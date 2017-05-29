@@ -1,26 +1,44 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
-    <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
     <script type="text/javascript">
     //<![CDATA[
       $(document).bind("mobileinit", function(){
         $.mobile.ajaxEnabled = false;
       });
+
+      jQuery.fn.extend({
+        live: function (event, callback) {
+          if (this.selector) {
+            jQuery(document).on(event, this.selector, callback);
+          }
+        }
+      });
     //]]>
     </script>
-    <script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+    <script src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <%= javascript_include_tag 'rails' %>
+    <%= javascript_include_tag 'jquery.mmenu.all' %>
+    <script type="text/javascript">
+    //<![CDATA[
+      $(function() {
+        $('div#menu').mmenu();
+      });
+    //]]>
+    </script>
     <%= stylesheet_link_tag 'mobile' %>
+    <%= stylesheet_link_tag 'jquery.mmenu.all' %>
     <%= csrf_meta_tag %>
   </head>
   <body>
     <div data-role="page">
       <div data-role="header">
-        <a href="/" id='home_link' data-icon="home" data-ajax="false" class="ui-btn-left">&nbsp;</a>
+        <a href="#menu" id='bars_link' data-icon="home" data-ajax="false" class="ui-btn-notext">&nbsp;</a>
         <h1><%= title %></h1>
-        <a href="?mobile=0" data-icon="gear" data-ajax="false" class="ui-btn-right"><%= t(:full_site)%></a>
+        <!--<a href="?mobile=0" data-icon="gear" data-ajax="false" class="ui-btn-right"><%= t(:full_site)%></a>-->
         <div data-role="navbar">
           <ul>
             <% if current_user %>
@@ -67,6 +85,9 @@
           <%= copyright %>
         </div>
         <div id="footer-right" data-hook="footer_right"></div>
+      </div>
+      <div id="menu">
+        <%= render 'shared/mobile_menu' %>
       </div>
       <%= render 'shared/google_analytics' %>
   </body>
