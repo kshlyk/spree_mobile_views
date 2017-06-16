@@ -1,4 +1,4 @@
-<% if @taxon.children.present? %>
+<% if @taxon.children.present? and @taxon.level < 3 %>
   <ul data-role="listview">
     <% @taxon.children.each do |taxon| %>
       <li><%= link_to taxon.name, seo_url(taxon) %></li>
